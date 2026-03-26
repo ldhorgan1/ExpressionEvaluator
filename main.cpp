@@ -18,7 +18,34 @@ struct Token {
 
 vector<Token> tokenize(const string& line) {
     vector<Token> tokens;
-    // TODO
+    string current = "";
+
+    for (int i = 0; i < line.length(); i++) {
+        char c = line[i];
+
+        if (c == ' ') {
+            if (current != "") {
+                tokens.push_back({current});
+                current = "";
+            }
+        }
+        else if (c >= '0' && c <= '9') {
+            current += c;
+        }
+        else {
+            if (current != "") {
+                tokens.push_back({current});
+                current = "";
+            }
+
+            string op = "";
+            op += c;
+            tokens.push_back({op});
+        }
+    }
+    if (current != "") {
+        tokens.push_back({current});
+    }
     return tokens;
 }
 
@@ -29,7 +56,12 @@ bool isOperator(const string& s) {
 }
 
 int precedence(const string& op) {
-    // TODO
+    if (op == "+" || op == "-") {
+        return 1;
+    }
+    else if (op == "*" || op == "/") {
+        return 2;
+    }
     return 0;
 }
 
