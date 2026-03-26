@@ -68,8 +68,35 @@ int precedence(const string& op) {
 // Detection
 
 bool isValidPostfix(const vector<Token>& tokens) {
-    // TODO
-    return false;
+    int count = 0;
+
+    for (int i = 0; i < tokens.size(); i++) {
+        string s = tokens[i].value;
+
+        if (s == "(" || s == ")") {
+            return false;
+        }
+        else if (isOperator(s)) {
+            if (count < 2) {
+                return false;
+            }
+            count -= 1;
+        }
+        else {
+            bool isNumber = true;
+
+            for (int j = 0; j < s.length(); j++) {
+                if (s[j] < '0' || s[j] > '9') {
+                    isNumber = false;
+                }
+            }
+            if (!isNumber) {
+                return false;
+            }
+            count += 1;
+        }
+    }
+    return count == 1;
 }
 
 bool isValidInfix(const vector<Token>& tokens) {
