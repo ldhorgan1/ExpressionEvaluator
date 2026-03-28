@@ -100,10 +100,46 @@ bool isValidPostfix(const vector<Token>& tokens) {
 }
 
 bool isValidInfix(const vector<Token>& tokens) {
-    // TODO
-    return false;
-}
+    if (tokens.size() == 0) {
+        return false;
+    }
 
+    int balance = 0;
+
+    for (int i = 0; i < tokens.size(); i++) {
+        string s = tokens[i].value;
+
+        if (s == "(") {
+            balance++;
+        }
+        else if (s == ")") {
+            balance--;
+            if (balance < 0) {
+                return false;
+            }
+        }
+        else if (isOperator(s)) {
+            if (i == 0 || i == tokens.size() - 1) {
+                return false;
+            }
+            if (isOperator(tokens[i - 1].value)) {
+                return false;
+            }
+        }
+        else {
+            for (int j = 0; j < s.length(); j++) {
+                if (s[j] < '0' || s[j] > '9') {
+                    return false;
+                }
+            }
+        }
+    }
+    if (balance != 0){
+        return false;
+    }
+
+    return true;
+}
 // Conversion
 
 vector<Token> infixToPostfix(const vector<Token>& tokens) {
