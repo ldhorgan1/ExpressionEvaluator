@@ -11,3 +11,12 @@
 - Added operator precedence helper for +, -, *, and /.
 - Tested running the program in CLion and fixed build configuration with CMake.
 - Confirmed the executable now runs from the IDE.
+
+## 2026-03-26
+- Worked on main.cpp.
+- Fixed tokenizer.
+- Added precedence() function.
+- Implemented isValidPostfix().
+- Tested with `3 4 +` and confirmed it was detected as POSTFIX.
+- Result was still `0` because evalPostfix() is not implemented yet.
+

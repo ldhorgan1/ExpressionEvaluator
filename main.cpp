@@ -116,8 +116,33 @@ vector<Token> infixToPostfix(const vector<Token>& tokens) {
 
 double evalPostfix(const vector<Token>& tokens) {
     ArrayStack<double> stack;
-    // TODO
-    return 0.0;
+   for (int i = 0; i < tokens.size(); i++) {
+       string s = tokens[i].value;
+
+       if (isOperator(s)) {
+           double b = stack.top();
+           stack.pop();
+           double a = stack.top();
+           stack.pop();
+
+           if (s == "+") {
+               stack.push(a + b);
+           }
+           else if (s == "-") {
+               stack.push(a - b);
+           }
+           else if (s == "*") {
+               stack.push(a * b);
+           }
+           else if (s == "/") {
+               stack.push(a / b);
+           }
+       }
+       else {
+           stack.push(stod(s));
+       }
+   }
+    return stack.top();
 }
 
 // Main
